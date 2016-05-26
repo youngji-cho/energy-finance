@@ -1,0 +1,11 @@
+setwd("~/Dropbox/Programming/신재생에너지 시장분석")
+library(xlsx)
+library(dplyr)
+
+total_generation<-read.xlsx2(file="total_generation.xlsx",header=FALSE,sheetIndex = 1,startRow = 3)
+names(total_generation)<-c("")
+renewable_generation<-read.xlsx(file="renewable-generation .xlsx",sheetIndex = 1,row)
+names(renewable_generation)<-c("time","location","pv","bio-gas","bio-LFG",
+                               "bio-other","wind","hydro-normal","hydro-small",
+                               "fuel-cell","ocean-energy","garbage","garbage-other","total")
+renewable_sorted<-select(renewable_generation,c(time,location,pv,wind))
