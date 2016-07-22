@@ -9,3 +9,7 @@ powersupply.today<-"https://openapi.kpx.or.kr/openapi/sukub5mToday/getSukub5mTod
 smp<-"https://openapi.kpx.or.kr/openapi/smp1hToday/getSmp1hToday?areaCd=1&serviceKey=8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D"
 powersupply.forecast<-"https://openapi.kpx.or.kr/openapi/forecast1dMaxBaseDate/getForecast1dMaxBaseDate?serviceKey=8PZnRzZb4yXsXJQVBDX74xuf8kHhF4cmY5XnEO9apteNWtahGwpA9%2FjrthHB0tX7GBlm9zN1A%2F0rKCx3wGe27g%3D%3D"
 
+req.powersupply<-GET(powersupply)
+req.powersupply.today<-GET(powersupply.today)
+req.smp<-GET(smp)
+req.powersupply.forcast<-GET(powersupply.forecast)
