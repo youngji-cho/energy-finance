@@ -13,3 +13,13 @@ req.powersupply<-GET(powersupply)
 req.powersupply.today<-GET(powersupply.today)
 req.smp<-GET(smp)
 req.powersupply.forcast<-GET(powersupply.forecast)
+
+xml.powersupply<-xmlTreeParse(req.powersupply)
+xml.powersupply.today<-xmlTreeParse(req.powersupply.today)
+xml.smp<-xmlTreeParse(req.smp)
+xml.powersupply.forecast<-xmlTreeParse(req.powersupply.forcast)
+
+root.powersupply<-xmlRoot(xml.powersupply)
+root.powersupply.today<-xmlRoot(xml.powersupply.today)
+root.smp<-xmlRoot(xml.smp)
+root.powersupply.forcast<-xmlRoot(xml.powersupply.forecast)
