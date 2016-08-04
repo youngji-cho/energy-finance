@@ -1,5 +1,7 @@
+setwd("~/Dropbox/Programming/R/data")
+library(tm)
+library(KoNLP)
 library(xlsx) 
-library(dplyr)
 library(zoo)
 
 smp.price<-read.xlsx2(file="smp.price.xlsx",sheetIndex = 1,startRow = 3,colClasses = c("character","numeric","numeric","numeric"))
