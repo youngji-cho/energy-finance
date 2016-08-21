@@ -1,3 +1,4 @@
+setwd("~/Dropbox/Programming/R/data")
 library(xlsx)
 library(lubridate)
 library(ggplot2)
@@ -11,8 +12,9 @@ elec$공급예비력<-as.integer(elec$공급예비력)
 elec$공급예비율<-as.integer(elec$공급예비율)
 elec$공급예비력<-elec$공급예비력*10
 
-ggplot(elec,aes(x=기간,y=공급예비력))+
-  geom_bar(stat = "identity")+
+graph<-ggplot(elec,aes(x=기간,y=공급예비력))+
+  geom_point(stat = "identity")+
+  geom_hline(aes(colour="red",size=10),yintercept=1000)+
   theme_bw(base_family = "AppleGothic")+
   ylab("공급예비력(Mw)")+
   xlab("기간(최근 100일)")+
