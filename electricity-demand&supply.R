@@ -28,8 +28,9 @@ term<-paste0("(",start.date,"~",end.date,")")
 
 reserve.graph<-ggplot(elec,aes(x=기간,y=공급예비력,colour=공급예비력))+
   geom_point(stat = "identity")+
-  geom_hline(yintercept=5000,colour="red",linetype="dashed", size=1)+
-  theme_bw(base_family = "AppleGothic")+
+  geom_hline(yintercept=5000,colour="red",linetype="dashed",show.legend=TRUE)+
+  scale_linetype_manual(name="비상",values = 5000)+
+  theme_bw(base_family = "AppleGothic")+ 
   ylab("공급예비력(Mw)")+
   xlab(paste("기간",term))+
   ggtitle(paste("공급예비력",term)) #공급예비력 계산 
@@ -41,3 +42,5 @@ capacity.graph<-ggplot(elec,aes(x=기간,y=공급예비율,group=1))+
   ylab("발전예비율(%)")+
   xlab(paste("기간",term))+
   ggtitle(paste("전력수급현황",term)) #공급예비율 계산 
+
+  
