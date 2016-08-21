@@ -25,7 +25,6 @@ end.date<-ymd(end.date) #날짜를 설정해주자
 elec<-filter(elec,start.date<기간<end.date)
 term<-paste0("(",start.date,"~",end.date,")")
 
-
 reserve.graph<-ggplot(elec,aes(x=기간,y=공급예비력,colour=공급예비력))+
   geom_point(stat = "identity")+
   geom_hline(yintercept=5000,colour="red",linetype="dashed", size=1)+
@@ -41,5 +40,3 @@ capacity.graph<-ggplot(elec,aes(x=기간,y=공급예비율,group=1))+
   ylab("발전예비율(%)")+
   xlab(paste("기간",term))+
   ggtitle(paste("전력수급현황",term)) #공급예비율 계산 
-
-  
