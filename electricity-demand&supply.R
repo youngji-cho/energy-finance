@@ -22,9 +22,9 @@ elec$공급예비율<-as.integer(as.character(elec$공급예비율))
 
 start.date<-ymd(start.date)
 end.date<-ymd(end.date) #날짜를 설정해주자
-elec<-subset(elec,start.date<=elec$기간 && start.date<=end.date)
+elec$기간<=end.date&elec$기간>=start.date
+elec<-elec[elec$기간<=end.date&elec$기간>=start.date,]
 term<-paste0("(",start.date,"~",end.date,")")
-
 
 reserve.graph<-ggplot(elec,aes(x=기간,y=공급예비력,colour=공급예비력))+
   geom_point(stat = "identity")+
