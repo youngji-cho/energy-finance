@@ -22,7 +22,6 @@ elec$공급예비율<-as.integer(as.character(elec$공급예비율))
 
 start.date<-ymd(start.date)
 end.date<-ymd(end.date) #날짜를 설정해주자
-elec$기간<=end.date&elec$기간>=start.date
 elec<-elec[elec$기간<=end.date&elec$기간>=start.date,]
 term<-paste0("(",start.date,"~",end.date,")")
 
@@ -43,4 +42,3 @@ capacity.graph<-ggplot(elec,aes(x=기간,y=공급예비율,group=1))+
   geom_hline(aes(yintercept=10,linetype="비상단계(10%)"), colour="red",show.legend=TRUE)+
   geom_hline(aes(yintercept=15,linetype= "OECD 평균 예비율(15%)"), colour= "blue",show.legend=TRUE)+
   geom_hline(aes(yintercept=22,linetype="국내 전력수급계획 예비율(22%)"), colour="green",show.legend=TRUE)
-  
