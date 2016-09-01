@@ -37,3 +37,16 @@ disslike.shap<-function(x){
   final<-arrange(ans,desc(총설비용량))
   return(final)
 }
+
+#### 그래프 그려보자. 
+x<-section("태양광")
+solar.plant<-disslike.shap(x)
+solar.major<-filter(solar.plant,총설비용량>=3)
+
+solar.plant.graph<-ggplot(data=solar.major,aes(x=reorder(발전소명, 총설비용량),y=총설비용량,fill=총설비용량))+
+  geom_bar(stat="identity")+
+  theme_bw(base_family = "AppleGothic")+
+  ylab("총설비용량(MW)")+
+  xlab("3Mw 이상 태양광 발전소(Utility Scale)")+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
