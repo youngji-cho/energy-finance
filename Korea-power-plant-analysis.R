@@ -22,10 +22,18 @@ section<-function(keyword){
 
 disslike.shap<-function(x){
   num<-grep(x$발전소명,pattern="#")
+  x$발전소명<-as.character(x$발전소명)
+  x$설비용량<-as.numeric(as.character(x$설비용량))
+  x$총설비용량<-as.numeric(as.character(x$총설비용량))
+  
   x.no<-x[-(num),]
   x.yes<-x[num,]
   
-  ordered<-x.yes[order(x.yes$발전소명),]
+  y.1<-x.yes[order(x.yes$발전소명),]
+  y.1$발전소명<-gsub(pattern="[0-9]|#",replacement="" ,y.1$발전소명)
+  y.2<-aggregate(cbind(설비용량,대수,총설비용량)~발전소명, data = y.1, sum)
   
-  
+  ans<-rbind.data.frame(x.no,y.2)
+  final<-arrange(ans,desc(총설비용량))
+  return(final)
 }
