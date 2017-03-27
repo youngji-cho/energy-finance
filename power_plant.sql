@@ -24,3 +24,6 @@ select *from power_plant;
 select * from `power_plant` where  `발전소명`='계' or `발전소명`='소계';
 select * from `power_plant` where  `발전소명`='계' or `발전소명`='소계';
 select * from `power_plant` where  `총설비용량`like '%"%'  limit 1,4;
+
+select *from `power_plant` where `id` like '%"%' or`연료원` like '%"%' or`발전형식` like '%"%' or
+`발전소명` like '%"%' or`설비용량` like '%"%' or`대수` like '%"%' or`총설비용량` like '%"%';
