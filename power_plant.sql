@@ -1,3 +1,4 @@
+
 create database `electricity market` character set utf8;
 use `electricity market`;
 
@@ -14,7 +15,7 @@ create table `power_plant` (
 );
 
 load data local infile 'Users/youngji/Dropbox/data/power_plant.csv'
-into table power_plant 
+into table power_plant
 fields terminated by ',' 
 lines terminated by '\r'
 (`연료원`,`발전형식`,`발전소명`,`설비용량`,`대수`,`총설비용량`);
@@ -31,4 +32,7 @@ select *from `power_plant` where `id` like '%"%' or`연료원` like '%"%' or`발
 ##정규표현식 
 select *from `power_plant` where `발전소명` regexp '^현';
 select *from `power_plant` where `발전소명` regexp '현';
-select *from `power_plant` where `발전소명` or `설비용량` or `대수` or`총설비용량`regexp '["]';
+select *from `power_plant` where `발전형식` regexp '^$|\s+'; #빈칸을 찾는다. 
+select *from `power_plant` where `발전소명` regexp '"' or `설비용량` regexp '"' or 
+`대수` regexp '"' or `총설비용량` regexp '"' ;
+select *from `power_plant` where `발전소명` regexp ('10호'| '군복');
