@@ -1,3 +1,4 @@
+
 create database `electricity market` character set utf8;
 use `electricity market`;
 
@@ -35,3 +36,7 @@ select *from `power_plant` where `발전형식` regexp '^$|\s+'; #빈칸을 찾�
 select *from `power_plant` where `발전소명` regexp '"' or `설비용량` regexp '"' or 
 `대수` regexp '"' or `총설비용량` regexp '"' ;
 select *from `power_plant` where `발전소명` regexp ('10호'| '군복');
+
+#데이터 베이스 변수 지정 
+select *from `power_plant` order by `연료원` desc  ;
+select id into @fuel from `power_plant` where `연료원`  regexp '연료원';
