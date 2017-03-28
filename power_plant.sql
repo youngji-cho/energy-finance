@@ -1,4 +1,3 @@
-
 create database `electricity market` character set utf8;
 use `electricity market`;
 
