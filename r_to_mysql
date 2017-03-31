@@ -1,0 +1,6 @@
+library("RMySQL")
+energy_db<-dbConnect(MySQL(),user="youngji",password="whdudwl4143", host="energy.ce2iefqgojtj.ap-northeast-2.rds.amazonaws.com")
+dbGetQuery(energy_db,"show databases;")
+dbGetQuery(energy_db,"use `electricity market`;")
+result<-dbGetQuery(energy_db,"select* from `power_plant`;")
+dbDisconnect(energy_db)
