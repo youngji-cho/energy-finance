@@ -37,3 +37,14 @@ disslike.shap<-function(x){
     }
 return(final)
 }
+
+#### 데이터를 모아보자 
+sythesis<-function(keywords,filename){
+  i=1
+  for(i in length(keywords)){
+    x<-section(filename,keywords[i])
+    y<-disslike.shap(x)
+    final_data<-cbind.data.frame(y,발전원=keywords[i])
+    i+1
+  }
+}
