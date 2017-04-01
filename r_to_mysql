@@ -1,70 +1,39 @@
-setwd("~/Dropbox/data")
+setwd("~/Dropbox/data/power_plant")
+options(encoding = 'UTF-8')
 library(dplyr)
 library(KoNLP)
 library(ggplot2)
 
-options(encoding = 'UTF-8')
-power_plant<-read.csv(file="power_plant.csv",header=TRUE,sep = ",",encoding = "utf-8")
-
-
-first<-grep(".",power_plant$연료원)
-level<-paste0(power_plant$연료원[first],"_",power_plant$발전형식[first])\
-last<-grep("^소계$",power_plant$발전소명)-1
-bound<-cbind.data.frame(level,first,last)
-
-section<-function(keyword,power_plant){
+section<-function(filename,keyword){
+  power_plant<-read.csv(file=filename,header=TRUE,sep = ",")
+  first<-grep(".",power_plant$연료원)
+  level<-paste0(power_plant$연료원[first],"_",power_plant$발전형식[first])
+  last<-grep("^소계$",power_plant$발전소명)-1
+  bound<-cbind.data.frame(level,first,last)
   val1<-grep(keyword,bound$level)
   sectioned<-power_plant[bound[val1,2]:bound[val1,3],]
   return(sectioned[,3:6])
 }
 
 disslike.shap<-function(x){
-  num<-grep(x$발전소명,pattern="#")
   x$발전소명<-as.character(x$발전소명)
   x$설비용량<-as.numeric(as.character(x$설비용량))
   x$대수<-as.numeric(as.character(x$대수))
   x$총설비용량<-as.numeric(as.character(x$총설비용량))
   
-  x.no<-x[-(num),]
-  x.yes<-x[num,]
-  
-  y.1<-x.yes[order(x.yes$발전소명),]
-  y.1$발전소명<-gsub(pattern="[0-9]|#",replacement="" ,y.1$발전소명)
-  y.2<-aggregate(cbind(설비용량,대수,총설비용량)~발전소명, data = y.1, sum)
-  
-  ans<-rbind.data.frame(x.no,y.2)
-  final<-arrange(ans,desc(총설비용량))
-  return(final)
+  if (sum(grepl(x$발전소명,pattern="#"))==0){
+    final=x
+    }else{
+    num=grep(x$발전소명,pattern="#")
+    x.no<-x[-(num),]
+    x.yes<-x[num,]
+    
+    y.1<-x.yes[order(x.yes$발전소명),]
+    y.1$발전소명<-gsub(pattern="[0-9]|#",replacement="" ,y.1$발전소명)
+    y.2<-aggregate(cbind(설비용량,대수,총설비용량)~발전소명, data = y.1, sum)
+    
+    ans<-rbind.data.frame(x.no,y.2)
+    final<-arrange(ans,desc(총설비용량))
+    }
+return(final)
 }
-
-#### 데이터를 모아보자 
-a<-section("태양광",power_plant)
-solar_plant1<-disslike.shap(a)
-solar_plant2<-cbind.data.frame(solar_plant1,발전원="태양광")
-
-b<-section("풍력",power_plant)
-wind_plant1<-disslike.shap(b)
-wind_plant2<-cbind.data.frame(wind_plant1,발전원="풍력")
-
-c<-section("소수력",power_plant)
-small_hydro_plant1<-disslike.shap(c)
-small_hydro_plant2<-cbind.data.frame(small_hydro_plant1,발전원="소수력")
-
-power_plant_data<-rbind.data.frame(solar_plant2,wind_plant2,small_hydro_plant2)
-
-##mysql에 넣기 
-library("RMySQL")
-energy_db<-dbConnect(MySQL(),user="youngji",password="whdudwl4143", host="energy.ce2iefqgojtj.ap-northeast-2.rds.amazonaws.com")
-dbGetQuery(energy_db,"show databases;")
-dbGetQuery(energy_db,"use `electricity_market`;")
-result<-dbGetQuery(energy_db,"select* from `renewable_power_plant`;")
-
-dbWriteTable(energy_db, name = 'renewable_power_plant1', value=power_plant_data,
-             append=TRUE,row.names=TRUE,field.type=list(발전소명="text",
-            설비용량="float",대수="float",총설비용량="float",발전원="text"))
-
-dbGetQuery(energy_db,"insert into `renewable_power_plant`(`발전소명`, `설비용량`,`대수`,`총설비용량`,`발전원`) 
-                      values (renewable)
-
-
-dbDisconnect(energy_db)
