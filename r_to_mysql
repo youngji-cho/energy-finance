@@ -39,61 +39,14 @@ return(final)
 }
 
 #### 데이터를 모아보자 
-sythesis<-function(keywords,filename){
-  i=1
-  for(i in length(keywords)){
+synthesis<-function(filename,keywords){
+  final_data<-data.frame(row.names = c("발전소명","설비용량","대수","총설비용량","발전원"))
+  for(i in 1:length(keywords)){
     x<-section(filename,keywords[i])
     y<-disslike.shap(x)
-    final_data<-cbind.data.frame(y,발전원=keywords[i])
-    i+1
+    z<-cbind.data.frame(y,발전원=keywords[i])
+    final_data<-rbind.data.frame(final_data,z)
+    i=i+1
   }
+  return(final_data) 
 }
-
-
-
-
-
-
-
-
-filename1<-"power_plant_20080101.csv"
-power_plant1<-synthesis(filename1,keywords)
-filename2<-"power_plant_20080401.csv"
-power_plant2<-synthesis(filename2,keywords)
-filename3<-"power_plant_20080701.csv"
-power_plant3<-synthesis(filename3,keywords)
-filename4<-"power_plant_20081001.csv"
-power_plant4<-synthesis(filename4,keywords)
-filename5<-"power_plant_20090101.csv"
-power_plant5<-synthesis(filename5,keywords)
-filename6<-"power_plant_20090401.csv"
-power_plant6<-synthesis(filename6,keywords)
-filename7<-"power_plant_20090701.csv"
-power_plant7<-synthesis(filename7,keywords)
-filename8<-"power_plant_20091001.csv"
-power_plant8<-synthesis(filename8,keywords)
-filename9<-"power_plant_20100101.csv"
-power_plant9<-synthesis(filename9,keywords)
-filename10<-"power_plant_20100401.csv"
-power_plant10<-synthesis(filename10,keywords)
-filename11<-"power_plant_20100701.csv"
-power_plant11<-synthesis(filename11,keywords)
-filename12<-"power_plant_20101001.csv"
-power_plant12<-synthesis(filename12,keywords)
-filename13<-"power_plant_20110101.csv"
-power_plant13<-synthesis(filename13,keywords)
-filename14<-"power_plant_20110401.csv"
-power_plant14<-synthesis(filename14,keywords)
-filename15<-"power_plant_20110701.csv"
-power_plant15<-synthesis(filename15,keywords)
-filename16<-"power_plant_20111001.csv"
-power_plant16<-synthesis(filename16,keywords)
-filename17<-"power_plant_20120101.csv"
-power_plant17<-synthesis(filename17,keywords)
-filename18<-"power_plant_20120401.csv"
-power_plant18<-synthesis(filename18,keywords)
-filename19<-"power_plant_20120701.csv"
-power_plant19<-synthesis(filename19,keywords)
-filename20<-"power_plant_20121001.csv"
-power_plant20<-synthesis(filename20,keywords)
-filename21<-"power_plant_20130101.csv"
